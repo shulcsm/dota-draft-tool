@@ -1,8 +1,10 @@
 @import '~bootstrap/scss/bootstrap';
 
-$background: lightblue;
-
 body {
-  background: $background;
-  font-family: "Helvetica Neue", serif;
+  padding-top: 10px;
+  //background: #232323
+}
+
+#main-nav {
+  margin-bottom: 30px;
 }

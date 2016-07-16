@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import { Router, Route, browserHistory } from 'react-router'
+import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
 import '../scss/main.scss'
@@ -18,7 +18,7 @@ socket.onOpen( ev => console.log("OPEN", ev) )
 socket.onError( ev => console.log("ERROR", ev) )
 socket.onClose( e => console.log("CLOSE", e))
 
-import { App } from './containers'
+import { App, Lobby } from './containers'
 //import reducers from '<project-path>/reducers'
 
 // Add the reducer to your store on the `routing` key
@@ -31,12 +31,16 @@ const store = createStore(
 // Create an enhanced history that syncs navigation events with the store
 const history = syncHistoryWithStore(browserHistory, store)
 
-const Foo = () => <div>Foo</div>
-const Bar = () => <div>Bar</div>
+const Foo = () => <div>Foo</div>;
+const Bar = () => <div>Bar</div>;
+
+import { Home } from './components'
 
 ReactDOM.render(<Provider store={store}>
   <Router history={history}>
     <Route path="/" component={App}>
+      <IndexRoute component={Home}/>
+      <Route path="lobby" component={Lobby}/>
       <Route path="foo" component={Foo}/>
       <Route path="bar" component={Bar}/>
     </Route>

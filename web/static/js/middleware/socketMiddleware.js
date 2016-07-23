@@ -1,31 +1,21 @@
 import { Socket as PhoenixSocket } from  '../../../../deps/phoenix/priv/static/phoenix'
-
-const actions = {
-  connecting: () => ({
-    type: "CONNECTION",
-    status: "CONNECTING"
-  }),
-  connected: () => ({
-    type: "CONNECTION",
-    status: "CONNECTED"
-  })
-}
+import { CONNECT, DISCONNECT, connecting, connected } from '../modules/connection'
 
 const socketMiddleware = (endPoint, opts = {}) => {
   var socket = null
 
   const onOpen = (socket, store) => evt => {
-    store.dispatch(actions.connected())
+    store.dispatch(connected())
   }
   
   return store => next => action => {
     switch (action.type) {
-      case "CONNECT":
+      case CONNECT:
 	if (socket != null) {
 	  scoket.disconnect()
 	}
 
-	store.dispatch(actions.connecting())
+	store.dispatch(connecting())
 	
 	socket = new PhoenixSocket(endPoint, opts)
 	socket.connect()
@@ -35,7 +25,7 @@ const socketMiddleware = (endPoint, opts = {}) => {
 	
 	break;
 	
-      case "DISCONNECT":
+      case DISCONNECT:
 	break;
 
       default:

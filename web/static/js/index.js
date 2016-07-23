@@ -1,12 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import { Router, Route, IndexRoute, browserHistory } from 'react-router'
-import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux'
+import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux'
 import socketMiddleware from './middleware/socketMiddleware';
-
+import reducer from './modules/reducers';
 import '../scss/main.scss'
 
 import { App, Home, Lobby } from './containers'
@@ -16,10 +16,7 @@ import { App, Home, Lobby } from './containers'
 import createLogger from 'redux-logger'
 
 const store = createStore(
-  combineReducers({
-    root: (state = {}) => state,
-    routing: routerReducer
-  }),
+  reducer,
   {},
   applyMiddleware(
     thunk,

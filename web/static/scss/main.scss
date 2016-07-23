@@ -1,12 +1,52 @@
+$light: #f8f4ee;
+$accent-dark: #602049;
+$accent-light: #45c190;
+
+$brand-primary: $accent-dark;
+
+$enable-flex:               true !default;
+$enable-rounded:            false !default;
+
 @import '~bootstrap/scss/bootstrap';
 $fa-font-path: "~font-awesome/fonts";
 @import '~font-awesome/scss/font-awesome';
 
+
 body {
-  padding-top: 10px;
-  //background: #232323
+  //padding-top: 10px;
+  background: $light;
+}
+
+#wrap {
+  margin-top: 10px;
 }
 
 #main-nav {
   margin-bottom: 30px;
+}
+
+.loader {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  background: $light;
+  color: $accent-dark;
+  display: flex;
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+
+  transition: all 0.1s ease-out;
+  opacity: 0;
+  visibility: hidden;
+  
+  > .fa {
+    font-size: 50px;
+  }
+
+  &.loading {
+    visibility: visible;
+    opacity: 1;
+  }
 }

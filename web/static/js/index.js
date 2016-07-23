@@ -5,19 +5,9 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux'
+import socketMiddleware from './middleware/socketMiddleware';
 
 import '../scss/main.scss'
-
-import { Socket } from  '../../../deps/phoenix/priv/static/phoenix'
-
-let socket = new Socket("/socket", {
-  logger: ((kind, msg, data) => { console.log(`${kind}: ${msg}`, data) })
-})
-
-socket.connect({user_id: "123"})
-socket.onOpen( ev => console.log("OPEN", ev) )
-socket.onError( ev => console.log("ERROR", ev) )
-socket.onClose( e => console.log("CLOSE", e))
 
 import { App, Home, Lobby } from './containers'
 //import reducers from '<project-path>/reducers'
@@ -33,6 +23,7 @@ const store = createStore(
   {},
   applyMiddleware(
     thunk,
+    socketMiddleware("/socket", {}),
     routerMiddleware(browserHistory),
     createLogger()
   )

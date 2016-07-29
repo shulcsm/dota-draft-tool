@@ -5,9 +5,11 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux'
-import socketMiddleware from './middleware/socketMiddleware';
 import reducer from './modules/reducers';
 import '../scss/main.scss'
+
+import { Socket } from  '../../../deps/phoenix/priv/static/phoenix'
+
 
 import { App, Home, Lobby } from './containers'
 //import reducers from '<project-path>/reducers'
@@ -19,8 +21,7 @@ const store = createStore(
   reducer,
   {},
   applyMiddleware(
-    thunk,
-    socketMiddleware("/socket", {}),
+    thunk.withExtraArgument({ socket: new Socket('/socket')}),
     routerMiddleware(browserHistory),
     createLogger()
   )

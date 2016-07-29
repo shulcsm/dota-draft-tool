@@ -1,13 +1,17 @@
-export const CONNECT = 'draft/connection/CONNECT'
-export const DISCONNECT = 'draft/connection/DISCONNECT'
+const CONNECT = 'draft/connection/CONNECT'
+const DISCONNECT = 'draft/connection/DISCONNECT'
 const CONNECTING = 'draft/connection/CONNECTING'
 const CONNECT_SUCCESS = 'draft/connection/CONNECT_SUCCESS'
 const CONNECT_FAIL = 'draft/connection/CONNECT_FAIL'
 
+// channel
+const JOIN = 'draft/connection/JOIN';
+const JOINED = 'draft/connection/JOINED';
 
 const initialState = {
   connected: false,
-  connecting: false
+  connecting: false,
+  channels: {}
 }
 
 const reducer = (state = initialState, action = {}) => {
@@ -36,6 +40,17 @@ const reducer = (state = initialState, action = {}) => {
 
 export default reducer
 
-export const connect = () => ({ type: CONNECT })
+export const connect = () => (dispatch, getState, { socket }) => {
+  dispatch(connecting())
+  socket.connect()
+  socket.onOpen((evt) => dispatch(connected()))
+}
+
+export const join = (topic) => (dispatch, getState, { socket }) => {
+  const chan = socket.channel(topic, {})
+  chan.join()
+}
+
+
 export const connecting = () => ({ type: CONNECTING })
 export const connected = () => ({ type: CONNECT_SUCCESS })

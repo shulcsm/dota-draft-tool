@@ -2,7 +2,7 @@ defmodule Draft.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", Draft.RoomChannel
+  channel "lobby:*", Draft.LobbyChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket

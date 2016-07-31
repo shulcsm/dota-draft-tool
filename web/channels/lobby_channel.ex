@@ -3,6 +3,7 @@ defmodule Draft.LobbyChannel do
   require Logger
 
   def join("lobby:" <> _hash_id, _message, socket) do
+    Draft.LobbySupervisor.start_agent()
     {:ok, socket}
   end
 end

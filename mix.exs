@@ -9,7 +9,7 @@ defmodule Draft.Mixfile do
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     aliases: ["phoenix.digest": "draft.digest"],
+     aliases: aliases(),
      deps: deps()]
   end
 
@@ -51,6 +51,8 @@ defmodule Draft.Mixfile do
   defp aliases do
     ["ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
      "ecto.reset": ["ecto.drop", "ecto.setup"],
-     "test": ["ecto.create --quiet", "ecto.migrate", "test"]]
+     "test": ["ecto.create --quiet", "ecto.migrate", "test"],
+     "phoenix.digest": "draft.digest"
+    ]
   end
 end

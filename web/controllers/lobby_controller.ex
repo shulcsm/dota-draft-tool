@@ -1,6 +1,8 @@
 defmodule Draft.LobbyController do
   use Draft.Web, :controller
 
+  alias Draft.Lobby
+  
   def hasher, do: Hashids.new() # @TODO salt from config  
   
   def index(conn, _params) do
@@ -8,10 +10,7 @@ defmodule Draft.LobbyController do
   end
 
   def create(conn, _params) do
-    # @TODO create lobby, persist and return that. Dummy for now.
-    json conn, %{
-      id: 1,
-      hashid: Hashids.encode(hasher, 1)
-    }
+    lobby = %Lobby{} |> Repo.insert!
+    render conn, "show.json", lobby: lobby, hashid: Hashids.encode(hasher, lobby.id)
   end
 end
